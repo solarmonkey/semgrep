@@ -28,6 +28,14 @@ This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html
   - Two findings are now identical after whitespace changes such as re-indentation
   - Two findings are now identical after a nosemgrep comment is added
   - Findings are now different if the same code triggered them on different lines
+- taint-mode: We no longer force the unification of metavariables between
+  sources and sinks by default. We realized that source-sink metavariable
+  unification was confusing even for experienced Semgrep users. Instead, each
+  set of metavariables is now considered independent. The metavariables available
+  to the rule message are all the `pattern-sinks` metavariables, plus the subset
+  of `pattern-sources` metavariables that do not collide with the ones bound by
+  `pattern-sinks`. But it is still possible to force metavariable unification
+  by setting `taint_unify_mvars: true` in the rule's `options`.
 
 ### Fixed
 
@@ -41,6 +49,8 @@ This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html
   constant will also be considered constant (#4301)
 - Constant propagation now recognizes operators `++` and `--` as side-effectful
   (#4667)
+- taint-mode: Metavariables bound by a `pattenr-inside` are now available to the
+  rule message. (#4464)
 
 ## [0.85.0](https://github.com/returntocorp/semgrep/releases/tag/v0.85.0) - 2022-03-16
 
